@@ -1,0 +1,118 @@
+[project]
+name = "control-development"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "alembic>=1.18.4",
+    "asyncpg>=0.31.0",
+    "celery>=5.6.3",
+    "fastapi>=0.137.1",
+    "pydantic-settings>=2.14.1",
+    "redis>=8.0.0",
+    "ruff>=0.15.17",
+    "slowapi>=0.1.10",
+    "sqlalchemy[asyncio]>=2.0.51",
+    "uvicorn>=0.49.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+preview = true
+fix = false
+target-version = "py312"
+line-length = 80
+exclude = [
+  "web/tests/",
+  "*.pyc",
+  ".ruff_cache",
+  ".mypy_cache",
+  ".venv",
+  "__pycache__",
+  ".vscode"
+]
+ 
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
+ 
+[tool.ruff.lint]
+# Разумный набор правил для Django-проекта.
+# Принцип: ловим настоящие баги и важный стиль, не воюем с typical Django patterns.
+select = [
+  "A",    # flake8-builtins — затенение builtins
+  "B",    # flake8-bugbear — реальные баги
+  "C4",   # flake8-comprehensions — оптимальные comprehensions
+  "DTZ",  # flake8-datetimez — naive datetime опасно
+  "E",    # pycodestyle errors
+  "ERA",  # flake8-eradicate — закомментированный код
+  "F",    # pyflakes — неиспользуемые импорты, undefined names
+  "FLY",  # pyflint
+  "G",    # flake8-logging-format
+  "I",    # isort
+  "ICN",  # flake8-import-conventions
+  "ISC",  # flake8-implicit-str-concat
+  "LOG",  # flake8-logging
+  "N",    # pep8-naming
+  "PERF", # perflint
+  "PIE",  # flake8-pie
+  "PT",   # flake8-pytest-style
+  "RET",  # flake8-return
+  "RSE",  # flake8-raise
+  "RUF",  # ruff-specific
+  "S",    # flake8-bandit — безопасность
+  "SIM",  # flake8-simplify
+  "SLOT", # flake8-slots
+  "T100", # flake8-debugger — забытый pdb
+  "UP",   # pyupgrade — современный синтаксис
+  "W",    # pycodestyle warnings
+  "YTT",  # flake8-2020
+]
+ignore = [
+  "A005",    # затенение stdlib имён модулей (есть apps.users.models.user)
+  "COM812",  # trailing comma — конфликтует с formatter
+  "ISC001",  # implicit str concat — конфликтует с formatter
+  "RUF001",  # cyrillic letter — у нас русский язык, это норма
+  "RUF002",  # cyrillic letter в docstring
+  "RUF003",  # cyrillic letter в комментариях
+  "RUF012",  # ClassVar для mutable атрибутов — несовместимо с Django Meta и DRF ViewSet-конфигами
+  "S101",    # assert — pytest без них не работает
+  "S105",    # hardcoded password — есть в settings, разберём отдельно
+  "S106",    # hardcoded password в аргументе — те же грабли
+  "S311",    # random для криптографии — у нас не крипта
+  "RUF029",
+  "B008",
+  "PERF403",
+  "N802",
+  "PERF401", # for→list comprehension — иногда for читаемее
+]
+flake8-quotes.inline-quotes = "double"
+mccabe.max-complexity = 10
+ 
+[tool.ruff.lint.isort]
+combine-as-imports = true
+case-sensitive = true
+relative-imports-order = "closest-to-furthest"
+known-first-party = ["apps", "settings", "servers"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+ 
+[tool.ruff.lint.per-file-ignores]
+# Тесты: разрешаем asserts, длинные строки в payload, доступ к _meta
+"**/tests/**/*.py" = ["S101", "E501", "SLF001"]
+"backend/conftest.py" = ["SLF001"]
+# __init__.py всегда что-то реэкспортирует — F401 неуместен
+"**/__init__.py" = ["F401", "F403"]
+
+[dependency-groups]
+dev = [
+    "aiosqlite>=0.22.1",
+    "httpx>=0.28.1",
+    "pytest>=9.1.0",
+    "pytest-asyncio>=1.4.0",
+]
+ 

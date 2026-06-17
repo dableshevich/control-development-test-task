@@ -1,0 +1,31 @@
+from datetime import datetime
+from enum import Enum
+
+from pydantic import BaseModel
+
+
+class ServiceType(str, Enum):
+    consultation = "consultation"
+    demo = "demo"
+    interview = "interview"
+    online_call = "online_call"
+
+
+class BookingStatus(str, Enum):
+    pending = "pending"
+    failed = "failed"
+    confirmed = "confirmed"
+
+
+class BookingRequest(BaseModel):
+    name: str
+    booking_datetime: datetime
+    service_type: ServiceType
+
+
+class BookingResponse(BaseModel):
+    id: int
+    name: str
+    booking_datetime: datetime
+    service_type: ServiceType
+    status: BookingStatus

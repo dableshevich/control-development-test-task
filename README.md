@@ -92,6 +92,11 @@ curl http://localhost:8000/api/bookings/1
 
 ## Тесты
 
+> необходимо установить пакетный менеджер uv 
+> ```bash
+> curl -LsSf https://astral.sh/uv/install.sh | sh
+> ```
+
 Тесты не требуют Docker и запускаются из корня проекта. Внешние зависимости
 подменяются: вместо PostgreSQL — SQLite в памяти, вместо брокера — заглушка.
 

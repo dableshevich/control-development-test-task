@@ -1,5 +1,5 @@
 from datetime import datetime
-from enum import Enum
+from enum import StrEnum
 
 from sqlalchemy import DateTime, Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -9,14 +9,14 @@ class Base(DeclarativeBase):
     pass
 
 
-class ServiceType(str, Enum):
+class ServiceType(StrEnum):
     consultation = "consultation"
     demo = "demo"
     interview = "interview"
     online_call = "online_call"
 
 
-class BookingStatus(str, Enum):
+class BookingStatus(StrEnum):
     pending = "pending"
     failed = "failed"
     confirmed = "confirmed"

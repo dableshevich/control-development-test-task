@@ -1,17 +1,17 @@
 from datetime import datetime
-from enum import Enum
+from enum import StrEnum
 
 from pydantic import BaseModel
 
 
-class ServiceType(str, Enum):
+class ServiceType(StrEnum):
     consultation = "consultation"
     demo = "demo"
     interview = "interview"
     online_call = "online_call"
 
 
-class BookingStatus(str, Enum):
+class BookingStatus(StrEnum):
     pending = "pending"
     failed = "failed"
     confirmed = "confirmed"

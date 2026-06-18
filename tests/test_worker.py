@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
 
@@ -17,7 +17,7 @@ async def _make_pending(session):
     return await repo.create(
         BookingRequest(
             name="Иван",
-            booking_datetime=datetime(2026, 6, 20, 14, tzinfo=timezone.utc),
+            booking_datetime=datetime(2026, 6, 20, 14, tzinfo=UTC),
             service_type=ServiceType.demo,
         )
     )

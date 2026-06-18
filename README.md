@@ -8,7 +8,7 @@
 - **FastAPI** — асинхронный REST API
 - **SQLAlchemy 2.0 (async)** + **asyncpg** — ORM и драйвер PostgreSQL
 - **Alembic** — миграции БД
-- **Celery** + **Redis** — воркер и очередь задач
+- **TaskIQ** + **Redis** — воркер и очередь задач
 - **Pydantic v2 / pydantic-settings** — валидация и конфигурация
 - **uv** — пакетный менеджер
 - **Ruff** — линтер и форматтер
@@ -187,7 +187,7 @@ booking_service/
   logic/            # сервисный слой (бизнес-логика)
   repositories/     # доступ к данным
   db/               # модели SQLAlchemy, сессия, движок
-  worker/           # Celery: инстанс и задачи
+  worker/           # TaskIQ: инстанс и задачи
   config/           # настройки (pydantic-settings)
   exceptions/       # доменные исключения
   main.py           # сборка приложения FastAPI

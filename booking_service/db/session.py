@@ -9,9 +9,7 @@ from sqlalchemy.pool import NullPool
 
 from booking_service.config import settings
 
-engine = create_async_engine(
-    settings.POSTGRES_URL, echo=False, poolclass=NullPool
-)
+engine = create_async_engine(settings.POSTGRES_URL, echo=False)
 
 async_session = async_sessionmaker(engine, expire_on_commit=False)
 

@@ -1,3 +1,5 @@
+from unittest.mock import AsyncMock
+
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
@@ -22,8 +24,8 @@ async def session():
 async def client(session, monkeypatch):
     app.dependency_overrides[get_session] = lambda: session
     monkeypatch.setattr(
-        "booking_service.logic.booking.confirm_booking.delay",
-        lambda *a, **k: None,
+        "booking_service.logic.booking.confirm_booking.kiq",
+        AsyncMock(),
     )
     limiter.enabled = False
     transport = ASGITransport(app=app)

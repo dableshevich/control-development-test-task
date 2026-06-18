@@ -1,3 +1,4 @@
+import taskiq_fastapi
 from fastapi import FastAPI, Request
 from fastapi.concurrency import asynccontextmanager
 from fastapi.responses import JSONResponse
@@ -9,13 +10,14 @@ from booking_service.api.routers import booking_router
 from booking_service.config import settings
 from booking_service.exceptions import BookingError, BookingNotFoundError
 from booking_service.logging_config import configure_logging
+from booking_service.worker.broker import broker
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     docs_url=f"{settings.API_PREFIX}/docs",
     redoc_url=f"{settings.API_PREFIX}/redoc",
 )
-
+taskiq_fastapi.init(broker, "booking_service.main:app")
 
 app.include_router(booking_router, prefix=settings.API_PREFIX)
 

@@ -10,9 +10,7 @@ _RESERVED = set(logging.LogRecord("", 0, "", 0, "", (), None).__dict__) | {
 class JSONFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         payload = {
-            "ts": datetime.fromtimestamp(
-                record.created, UTC
-            ).isoformat(),
+            "ts": datetime.fromtimestamp(record.created, UTC).isoformat(),
             "level": record.levelname,
             "logger": record.name,
             "message": record.getMessage(),
@@ -31,3 +29,6 @@ def configure_logging(level: str = "INFO") -> None:
     root = logging.getLogger()
     root.handlers = [handler]
     root.setLevel(level)
+
+
+booking_logger = logging.getLogger("booking_service.booking")

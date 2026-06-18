@@ -13,4 +13,4 @@ RUN uv sync --frozen --no-install-project --no-dev
 COPY . .
 RUN uv sync --frozen --no-dev
 
-CMD ["celery", "-A", "booking_service.worker.celery_app", "worker", "--loglevel=info"]
+CMD ["taskiq", "worker", "booking_service.worker.broker:broker"]
